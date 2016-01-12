@@ -1,3 +1,5 @@
+![banner](banner.png)
+
 #Disable WebRTC Indicator Overlay Firefox Add-On
 Removes the floating overlay with the firefox and camera icons that is displayed when the webcam or microphone are accessed over webrtc. This add-on is only meant for use in special enviroments like embedded applications or kiosk systems.
 

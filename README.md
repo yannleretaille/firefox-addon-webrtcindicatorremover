@@ -1,13 +1,13 @@
 ![banner](banner.png)
 
 #Disable WebRTC Indicator Overlay Firefox Add-On
-Removes the floating overlay with the firefox and camera icons that is displayed when the webcam or microphone are accessed over webrtc. This add-on is only meant for use in special enviroments like embedded applications or kiosk systems.
+Removes the floating overlay with the firefox and camera icons that is displayed when the webcam or microphone are accessed over webrtc. This add-on is only meant for use in special environments like embedded applications or kiosk systems.
 
 ## Installation
 You can get the add-on [here](xpi/disable_webrtc_indicator_overlay-0.1.3-fx+an.xpi)
 
 ## Removing the Permissions Popup
-In case you also wish to remove the popup that asks for permission to use camera/microphone, you can set `media.navigator.permission.disabled = true` in `about:conifg`. Hower, this should also only be done in controlled enviroments.
+In case you also wish to remove the popup that asks for permission to use camera/microphone, you can set `media.navigator.permission.disabled = true` in `about:conifg`. However, this should also only be done in controlled environments.
 
 ## Security and Privacy Implications
-Please consider that there is a reason that the developers introduced these measures. Especially the combination of the two options can have serious security implications, because any website could listen to your microphone and camera without you even noticing. Only use both options in controlled enviroments and jus the addon only when its really necessary for your application.
+Please take into account that there is a reason that the developers introduced this overlay. Especially the combination of the two options can have serious security implications, because any website could listen to your microphone and camera without you even noticing. Only use both options in controlled environments and just the addon only when its really necessary for your application.

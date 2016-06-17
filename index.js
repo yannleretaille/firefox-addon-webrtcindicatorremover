@@ -19,7 +19,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource:///modules/webrtcUI.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "Promise",
-  "resource://gre/modules/Promise.jsm");
+  "resource://gre/modules/Promise.jsm"); 
 
 
 function listener(event) {

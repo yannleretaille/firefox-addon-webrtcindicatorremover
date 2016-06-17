@@ -11,22 +11,21 @@
 */
 
 //requirements
-var events = require("sdk/system/events");
 var { setInterval, clearInterval } = require("sdk/timers");
-var { Ci, Cu } = require("chrome");
-var self = require('sdk/self');
+var { Cu } = require("chrome");
 
 //imports
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+Cu.import("resource:///modules/webrtcUI.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "Promise",
   "resource://gre/modules/Promise.jsm");
 
 
 function listener(event) {
-    //wait until showGlobalIndicator is true (max 500ms)
-    promiseWaitForCondition(() => Cu.import("resource:///modules/webrtcUI.jsm", {}).webrtcUI.showGlobalIndicator).then(function() {
-        //wait until the indicator window is actually really displayed (max 500ms)
+    //wait until showGlobalIndicator is true (max 1000ms)
+    promiseWaitForCondition(() => webrtcUI.showGlobalIndicator).then(function() {
+        //wait until the indicator window is actually really displayed (max 100ms)
         promiseWaitForCondition(() => Services.wm.getMostRecentWindow("Browser:WebRTCGlobalIndicator")).then(function() {
             //get window and close it
             Services.wm.getMostRecentWindow("Browser:WebRTCGlobalIndicator").close();
@@ -35,21 +34,24 @@ function listener(event) {
 }
 
 //listen to new recording events (e.g. after the user clicked on "share/allow" and mic/screen/camera are shared)
-events.on("recording-device-events", listener);
+var observer = function(sub,top,data){
+	//console.log("obsservice");
+	listener(data);
+}
+Services.obs.addObserver(observer,"getUserMedia:response:allow",false)
+
 
 /* HELPER FUNCTIONS */
-function waitForCondition(condition, nextTest, errorMsg) {
+function waitForCondition(condition, nextTest) {
     var tries = 0;
     var interval = setInterval(function() {
         if (tries >= 500) {
-            ok(false, errorMsg);
             moveOn();
         }
         var conditionPassed;
         try {
             conditionPassed = condition();
         } catch (e) {
-            ok(false, e + "\n" + e.stack);
             conditionPassed = false;
         }
         if (conditionPassed) {
@@ -62,7 +64,7 @@ function waitForCondition(condition, nextTest, errorMsg) {
 
 function promiseWaitForCondition(aConditionFn) {
     let deferred = Promise.defer();
-    waitForCondition(aConditionFn, deferred.resolve, "Condition timed out");
+    waitForCondition(aConditionFn, deferred.resolve);
     return deferred.promise;
 }
 

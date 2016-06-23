@@ -13,6 +13,7 @@
 //requirements
 var { setInterval, clearInterval } = require("sdk/timers");
 var { Cu } = require("chrome");
+var events = require("sdk/system/events");
 
 //imports
 Cu.import("resource://gre/modules/Services.jsm");
@@ -34,6 +35,7 @@ function listener(event) {
 }
 
 //listen to new recording events (e.g. after the user clicked on "share/allow" and mic/screen/camera are shared)
+events.on("recording-device-events", listener);
 var observer = function(sub,top,data){
 	//console.log("obsservice");
 	listener(data);
